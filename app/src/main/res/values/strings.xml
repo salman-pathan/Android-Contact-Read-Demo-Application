@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Contact Read Demo</string>
     <string name="demo_name">very very very big demo name</string>
+    <string name="demo_mobile_no">+91XYZABC237X</string>
 </resources>

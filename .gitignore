@@ -44,4 +44,4 @@ obj/
 *.iws
 *.ipr
 *~
-*.swp
+*.swp'.idea' 
