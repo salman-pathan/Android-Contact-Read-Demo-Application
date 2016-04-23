@@ -3,9 +3,9 @@ package com.codiodes.contactreaddemo;
 import android.app.Application;
 import android.content.Context;
 
-import com.codiodes.contactreaddemo.dagger.ApplicationComponent;
-import com.codiodes.contactreaddemo.dagger.ApplicationModule;
-import com.codiodes.contactreaddemo.dagger.DaggerApplicationComponent;
+import com.codiodes.contactreaddemo.dagger.component.ApplicationComponent;
+import com.codiodes.contactreaddemo.dagger.component.DaggerApplicationComponent;
+import com.codiodes.contactreaddemo.dagger.module.ApplicationModule;
 
 
 /**

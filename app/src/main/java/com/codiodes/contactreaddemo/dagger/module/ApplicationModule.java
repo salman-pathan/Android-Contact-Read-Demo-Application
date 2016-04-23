@@ -1,4 +1,4 @@
-package com.codiodes.contactreaddemo.dagger;
+package com.codiodes.contactreaddemo.dagger.module;
 
 import android.app.Application;
 

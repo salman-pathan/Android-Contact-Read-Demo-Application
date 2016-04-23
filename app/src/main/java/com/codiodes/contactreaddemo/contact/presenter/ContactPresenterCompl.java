@@ -1,8 +1,5 @@
 package com.codiodes.contactreaddemo.contact.presenter;
 
-import android.content.Context;
-
-import com.codiodes.contactreaddemo.CRDApplication;
 import com.codiodes.contactreaddemo.contact.model.ContactsProvider;
 import com.codiodes.contactreaddemo.contact.view.IContactView;
 
@@ -15,11 +12,12 @@ public class ContactPresenterCompl implements IContactPresenter {
 
 
     private IContactView mContactView;
-    private ContactsProvider mContactsProvider;
+    ContactsProvider mContactsProvider;
 
     @Inject
-    public ContactPresenterCompl(IContactView contactView) {
+    public ContactPresenterCompl(IContactView contactView, ContactsProvider contactsProvider) {
         mContactView = contactView;
+        mContactsProvider = contactsProvider;
     }
 
     @Override

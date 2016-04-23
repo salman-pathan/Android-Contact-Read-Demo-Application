@@ -1,4 +1,4 @@
-package com.codiodes.contactreaddemo.dagger;
+package com.codiodes.contactreaddemo.dagger.module;
 
 import com.codiodes.contactreaddemo.contact.model.ContactsProvider;
 import com.codiodes.contactreaddemo.contact.presenter.ContactPresenterCompl;
@@ -22,18 +22,18 @@ public class ContactModule {
     }
 
     @Provides
-    public ContactsProvider provideContactsProvider() {
-        return  new ContactsProvider();
-    }
-
-    @Provides
     public IContactView provideContactView() {
         return mContactView;
     }
 
     @Provides
     public IContactPresenter provideContactPresenter(IContactView contactView) {
-        return new ContactPresenterCompl(contactView);
+        return new ContactPresenterCompl(contactView, provideContactsProvider());
+    }
+
+    @Provides
+    public ContactsProvider provideContactsProvider() {
+        return new ContactsProvider();
     }
 
 }

@@ -34,4 +34,12 @@ public class Contact {
     public Uri getPhotoUri() {
         return photoUri;
     }
+
+    @Override
+    public String toString() {
+        return "Contact Id :" + contactId + System.getProperty("line.separator") +
+                "Contact Name" + contactName + System.getProperty("line.separator") +
+                "Contact Phone" + contactPhone + System.getProperty("line.separator") +
+                "Photo URI" + photoUri;
+    }
 }

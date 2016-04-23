@@ -1,10 +1,8 @@
-package com.codiodes.contactreaddemo.dagger;
+package com.codiodes.contactreaddemo.dagger.component;
 
-import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 
-import com.codiodes.contactreaddemo.contact.presenter.IContactPresenter;
+import com.codiodes.contactreaddemo.dagger.module.ApplicationModule;
 
 import javax.inject.Singleton;
 

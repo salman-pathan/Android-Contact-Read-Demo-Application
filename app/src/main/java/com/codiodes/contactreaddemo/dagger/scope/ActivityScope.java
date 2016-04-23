@@ -1,4 +1,4 @@
-package com.codiodes.contactreaddemo.dagger;
+package com.codiodes.contactreaddemo.dagger.scope;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

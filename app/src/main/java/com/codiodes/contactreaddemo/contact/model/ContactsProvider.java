@@ -5,6 +5,7 @@ import android.content.ContentUris;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.codiodes.contactreaddemo.CRDApplication;
 import com.codiodes.contactreaddemo.contact.entity.Contact;
@@ -17,9 +18,10 @@ import java.util.List;
  */
 public class ContactsProvider {
 
-    private Uri CONTACT_URI = ContactsContract.Contacts.CONTENT_URI;
+    private static final String TAG = ContactsProvider.class.getSimpleName();
+    private Uri CONTACT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
     private static final String CONTACT_ID = ContactsContract.Contacts._ID;
-    private static final String  CONTACT_NAME = ContactsContract.Contacts.DISPLAY_NAME;
+    private static final String  CONTACT_NAME = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME;
     private static final String CONTACT_PHONE_NO = ContactsContract.CommonDataKinds.Phone.NUMBER;
     private static final String CONTACT_PHOTO = ContactsContract.CommonDataKinds.Photo.PHOTO;
     private final ContentResolver mContentResolver;
@@ -52,6 +54,7 @@ public class ContactsProvider {
         Uri photoUri = Uri.withAppendedPath(personUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
 
         Contact contact = new Contact(contactId, name, String.valueOf(phoneUri), photoUri);
+        Log.d(TAG, contact.toString());
         return contact;
     }
 }

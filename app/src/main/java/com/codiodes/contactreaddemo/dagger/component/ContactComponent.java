@@ -1,11 +1,10 @@
-package com.codiodes.contactreaddemo.dagger;
-
-import android.app.Activity;
+package com.codiodes.contactreaddemo.dagger.component;
 
 import com.codiodes.contactreaddemo.contact.MainActivity;
+import com.codiodes.contactreaddemo.contact.model.ContactsProvider;
 import com.codiodes.contactreaddemo.contact.presenter.IContactPresenter;
-
-import javax.inject.Singleton;
+import com.codiodes.contactreaddemo.dagger.module.ContactModule;
+import com.codiodes.contactreaddemo.dagger.scope.ActivityScope;
 
 import dagger.Component;
 
@@ -19,5 +18,7 @@ import dagger.Component;
 )
 public interface ContactComponent {
     void inject(MainActivity activity);
+    void inject(IContactPresenter contactPresenter);
     IContactPresenter getContactPresenter();
+    ContactsProvider getContactsProvider();
 }
