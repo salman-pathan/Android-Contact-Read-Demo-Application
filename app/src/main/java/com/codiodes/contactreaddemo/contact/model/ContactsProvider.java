@@ -49,10 +49,16 @@ public class ContactsProvider {
     private Contact getContact(Cursor cursor) {
         String contactId = cursor.getString(cursor.getColumnIndex(CONTACT_ID));
         String name = cursor.getString(cursor.getColumnIndex(CONTACT_NAME));
-        Uri phoneUri = Uri.withAppendedPath(CONTACT_URI, String.valueOf(contactId));
+//        Uri phoneUri = Uri.withAppendedPath(CONTACT_URI, String.valueOf(contactId));
+        String phoneUri = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
         Uri personUri = ContentUris.withAppendedId(CONTACT_URI, Long.parseLong(contactId));
-        Uri photoUri = Uri.withAppendedPath(personUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
-
+        Uri photoUri = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            photoUri = Uri.withAppendedPath(personUri, ContactsContract.Contacts.Photo.PHOTO);
+        }
+        if (name.trim().equals("")) {
+            return null;
+        }
         Contact contact = new Contact(contactId, name, String.valueOf(phoneUri), photoUri);
         Log.d(TAG, contact.toString());
         return contact;

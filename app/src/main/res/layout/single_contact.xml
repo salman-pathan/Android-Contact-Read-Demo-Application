@@ -41,9 +41,11 @@
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_weight="0.2"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom"
+            android:src="@drawable/icon_phone"/>
 
         <TextView
+            android:id="@+id/contact_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"

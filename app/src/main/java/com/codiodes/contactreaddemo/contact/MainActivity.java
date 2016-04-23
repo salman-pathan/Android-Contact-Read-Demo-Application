@@ -1,11 +1,16 @@
 package com.codiodes.contactreaddemo.contact;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.codiodes.contactreaddemo.CRDApplication;
 import com.codiodes.contactreaddemo.R;
@@ -22,12 +27,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MainActivity extends CRDActivity implements IContactView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 12;
-    //    @Bind(R.id.contact_list)
-//    RecyclerView mContactList;
+    ProgressDialog mProgressDialog;
+
+    @Bind(R.id.contact_list)
+    RecyclerView mContactList;
 
     @Inject
     IContactPresenter mContactPresenter;
@@ -36,6 +46,12 @@ public class MainActivity extends CRDActivity implements IContactView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mContactList = (RecyclerView) findViewById(R.id.contact_list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        mContactList.setLayoutManager(layoutManager);
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(getString(R.string.loading_contacts));
+        mProgressDialog.setIndeterminate(true);
         loadContacts();
     }
 
@@ -43,6 +59,11 @@ public class MainActivity extends CRDActivity implements IContactView {
     @Override
     public void toggleProgressBar(boolean toggleStatus) {
         Log.d(TAG, "toggleProgressBar: " + toggleStatus);
+        if (toggleStatus) {
+            mProgressDialog.show();
+        } else {
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override
@@ -52,30 +73,15 @@ public class MainActivity extends CRDActivity implements IContactView {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.READ_CONTACTS)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
             } else {
-
-                // No explanation needed, we can request the permission.
-
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.READ_CONTACTS},
                         MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
-            
-            
-            
+        } else {
+            mContactPresenter.loadContacts();
         }
     }
 
@@ -83,6 +89,8 @@ public class MainActivity extends CRDActivity implements IContactView {
     public void onLoadContacts(List<Contact> contactList) {
         Log.d(TAG, "Loading Contacts Completed");
         toggleProgressBar(false);
+        ContactAdapter contactAdapter = new ContactAdapter(contactList);
+        mContactList.setAdapter(contactAdapter);
     }
 
     @Override
@@ -100,25 +108,15 @@ public class MainActivity extends CRDActivity implements IContactView {
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
+                    toggleProgressBar(true);
                     mContactPresenter.loadContacts();
-
-
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    Toast.makeText(MainActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 }

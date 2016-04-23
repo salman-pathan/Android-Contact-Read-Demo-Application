@@ -13,14 +13,14 @@ public class CRDActivity extends CRDAbstractActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        injectViews();
+//        injectViews();
         setupComponents();
     }
 
-    @Override
-    protected void injectViews() {
-        ButterKnife.bind(this);
-    }
+//    @Override
+//    protected void injectViews() {
+//        ButterKnife.bind(this);
+//    }
 
     @Override
     protected void setupComponents() {

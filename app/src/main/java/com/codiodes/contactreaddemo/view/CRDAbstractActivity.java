@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
  */
 public abstract class CRDAbstractActivity extends AppCompatActivity {
 
-    protected abstract void injectViews();
+//    protected abstract void injectViews();
     protected abstract void setupComponents();
 
 }
